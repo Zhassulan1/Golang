@@ -1,5 +1,5 @@
-module go-rest-api-example
+module tsis_1
 
 go 1.21.6
 
-require github.com/gorilla/mux v1.8.1 // indirect
+require github.com/gorilla/mux v1.8.1
