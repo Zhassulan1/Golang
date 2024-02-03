@@ -15,9 +15,9 @@ func main() {
 	// setting up endpoints
 	router.HandleFunc("/health-check", handlers.HealthCheck).Methods("GET")
 	router.HandleFunc("/films", handlers.GetFilms).Methods("GET")
-	// router.HandleFunc("/films/Id/{Id}", handlers.GetById).Methods("GET")
-	// router.HandleFunc("/films/Name/{Name}", handlers.GetByName).Methods("GET")
-	// router.HandleFunc("/films/Genre/{Genre}", handlers.GetByGenre).Methods("GET")
+	router.HandleFunc("/films/Id/{Id}", handlers.GetFilmById).Methods("GET")
+	router.HandleFunc("/films/Genre/{Genre}", handlers.GetFilmByGenre).Methods("GET")
+	router.HandleFunc("/films/Search/{Name}", handlers.GetFilmsByName).Methods("GET")
 	http.Handle("/", router)
 
 	// starting listener
