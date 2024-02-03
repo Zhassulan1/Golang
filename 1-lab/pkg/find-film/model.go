@@ -1,4 +1,4 @@
-package api
+package findfilm
 
 type Film struct {
 	ID    int    `json:"ID"`
