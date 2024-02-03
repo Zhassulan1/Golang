@@ -6,7 +6,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// type Guests
 
 func main() {
 	router := mux.NewRouter()

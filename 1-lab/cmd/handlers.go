@@ -11,10 +11,7 @@ import (
 
 
 func HealthCheck(w http.ResponseWriter, r *http.Request) {
-	// status code
 	w.WriteHeader(http.StatusOK)
-
-	// updating response writer
 	w.Write([]byte("API is working"))
 }
 
@@ -93,7 +90,8 @@ func GetFilmByGenre(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(films)
 }
 
-// TODO: implement Levenstein distance
+
+// TODO: implement Levenstein distance method
 func GetFilmsByName(w http.ResponseWriter, r *http.Request) {
 	argv := mux.Vars(r)
 	name, ok := argv["Name"]
