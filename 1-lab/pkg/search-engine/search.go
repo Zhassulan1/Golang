@@ -1,11 +1,12 @@
 package searchengine
 
 import (
+	"log"
 	"strings"
 	findfilm "tsis_1/pkg/find-film"
 )
 
-// Implementing Levenshtein distance method using wagner-fischer algorithm
+// Implementing Levenshtein distance method using Wagner–Fischer algorithm
 func wagnerFischer(s1, s2 string) float64 {
 	len1, len2 := len(s1), len(s2)
 
@@ -58,11 +59,17 @@ func searchFilms(s1, s2 []string, textLen int) bool {
 	for i := range s1 {
 		for j := range s2 {
 			distance := wagnerFischer(s1[i], s2[j])
-			if distance <= 3 && textLenf >= 5 || distance/textLenf >= 0.2 {
+			if distance <= 1 && textLen <= 4 {
+				log.Printf("Found match: %s %s %f\n", s1[i], s2[j], distance)
+				return true
+			} else if distance <= 3 && textLenf >= 7 {
+				log.Printf("Found match: %s %s %f\n", s1[i], s2[j], distance)
+				return true
+			} else if distance <= 2 && 4 <= textLen && textLen <= 6 {
+				log.Printf("Found match: %s %s %f\n", s1[i], s2[j], distance)
 				return true
 			} else if distance/textLenf <= 0.28 {
-				return true
-			} else if distance <= 2 && textLen <= 4 {
+				log.Printf("Found match: %s %s %f\n", s1[i], s2[j], distance)
 				return true
 			}
 		}
@@ -88,6 +95,7 @@ func Search(text string) []findfilm.Film {
 		film, ok := exactMatch(text[1 : len(text)-1])
 		if ok {
 			Result = append(Result, film)
+			return Result
 		}
 	}
 
