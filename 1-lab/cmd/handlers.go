@@ -8,7 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 )
-
+const NOT_FOUND = "Wrong request or film not found"
 
 func HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
@@ -24,36 +24,24 @@ func GetFilms(w http.ResponseWriter, r *http.Request) {
 }
 
 
-func getFilmById(filmId int) (findfilm.Film, bool) {
-	for i := range findfilm.Films {
-		if findfilm.Films[i].ID == filmId {
-			return findfilm.Films[i], true
-		}
-	}
-	return findfilm.Films[0], false
-}
-
 func GetFilmById(w http.ResponseWriter, r *http.Request) {
 	argv := mux.Vars(r)
 	
 	filmIdStr, ok := argv["Id"]
 	if !ok {
-		http.Error(w, "Something wrong with Film id", http.StatusBadRequest)
+		http.Error(w, NOT_FOUND, http.StatusBadRequest)
 		return
 	}
-	
 	filmId, err := strconv.Atoi(filmIdStr)
 	if err != nil {
-		http.Error(w, "Wrong Film id", http.StatusBadRequest)
+		http.Error(w, NOT_FOUND, http.StatusBadRequest)
 		return
 	}
-	
-	filmData, ok := getFilmById(filmId)
-	if !ok {
-		http.Error(w, "Wrong Film id", http.StatusBadRequest)
+	if filmId < 0 || filmId >= len(findfilm.Films) {
+		http.Error(w, NOT_FOUND, http.StatusBadRequest)
 		return
 	}
-	
+	filmData := findfilm.Films[filmId]
 	w.Header().Set("Content-Type", "applications/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(filmData)
@@ -75,13 +63,13 @@ func GetFilmByGenre(w http.ResponseWriter, r *http.Request) {
 	argv := mux.Vars(r)
 	genre, ok := argv["Genre"]
 	if !ok {
-		http.Error(w, "Something wrong with Film Genre", http.StatusBadRequest)
+		http.Error(w, NOT_FOUND, http.StatusBadRequest)
 		return
 	}
 
 	films, ok := getFilmByGenre(genre)
 	if !ok {
-		http.Error(w, "Something wrong with Film Genre", http.StatusBadRequest)
+		http.Error(w, NOT_FOUND, http.StatusBadRequest)
 		return
 	}
 
@@ -96,7 +84,7 @@ func GetFilmsByName(w http.ResponseWriter, r *http.Request) {
 	argv := mux.Vars(r)
 	name, ok := argv["Name"]
 	if !ok {
-		http.Error(w, "Something wrong with Film Name", http.StatusBadRequest)
+		http.Error(w, "Could not find any film", http.StatusBadRequest)
 		return
 	}
 
