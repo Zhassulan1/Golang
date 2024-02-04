@@ -9,4 +9,4 @@ This program uses [Wagner–Fischer](https://en.wikipedia.org/wiki/Wagner%E2%80%
 ```http://localhost:8080/films/Id/``` to get the film by id
 ```http://localhost:8080/films/Genre``` to search films of some genre
 ```http://localhost:8080/films/Name``` to get film name (spaces are allowed)
-```http://localhost:8080/films/Search/{name}``` to search by name. This method finds films with simillar name or if name is misspelled Use quotation mark to specify Exact match of name (like in google search).
+```http://localhost:8080/films/Search/``` to search by name. This method finds films with simillar name or if name is misspelled Use quotation mark to specify Exact match of name (like in google search).
